@@ -8,10 +8,57 @@ import Button from "./Button";
 gsap.registerPlugin(ScrollTrigger);
 const Hero = () => {
   const totalVideos = 4;
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [direction, setDirection] = useState("");
+
+  const directions = {
+    north: "North",
+    south: "South",
+    east: "East",
+    west: "West",
+    eastnorth: "East-North",
+    eastsouth: "East-South",
+    northwestEast: "North-West-East", // North-West-East combination
+    southeastWest: "South-East-West", // South-East-West combination
+  };
+
+  const handleMouseMove = (event: any) => {
+    const newX = event.clientX;
+    const newY = event.clientY;
+
+    // Determine the direction based on previous and new mouse position
+    if (newX > mousePosition.x && newY < mousePosition.y) {
+      setDirection(directions.eastnorth); // East-North
+    } else if (newX < mousePosition.x && newY < mousePosition.y) {
+      setDirection(directions.eastsouth); // East-South
+    } else if (newX > mousePosition.x && newY > mousePosition.y) {
+      setDirection(directions.eastsouth); // East-South
+    } else if (newX < mousePosition.x && newY > mousePosition.y) {
+      setDirection(directions.southeastWest); // South-East-West
+    } else if (newX > mousePosition.x && newY < mousePosition.y) {
+      setDirection(directions.northwestEast); // North-West-East
+    } else if (newX > mousePosition.x) {
+      setDirection(directions.east);
+    } else if (newX < mousePosition.x) {
+      setDirection(directions.west);
+    } else if (newY < mousePosition.y) {
+      setDirection(directions.north);
+    } else if (newY > mousePosition.y) {
+      setDirection(directions.south);
+    }
+
+    setMousePosition({ x: newX, y: newY });
+  };
+
+  useEffect(() => {
+    console.log(direction);
+  }, [direction]);
   const nextVdRef = useRef<any>(null);
   const [currentIndex, setCurrentIndex] = useState(1);
   const [hasClicked, setHasClicked] = useState(false);
+  const [hasHovered, setHasHovered] = useState(false);
   const [loadedVideos, setLoadedVideos] = useState(0);
+  const [showSmallVideo, setShowSmallVideo] = useState(false);
   const [loading, setLoading] = useState(true);
   const handleVideoLoad = () => {
     setLoadedVideos((prev) => prev + 1);
@@ -25,6 +72,7 @@ const Hero = () => {
     setCurrentIndex((prevIndex) => (prevIndex % totalVideos) + 1);
   };
 
+  useEffect(() => {}, []);
   useEffect(() => {
     console.log(loadedVideos);
     if (loadedVideos === totalVideos - 1) {
@@ -37,7 +85,10 @@ const Hero = () => {
   useGSAP(
     () => {
       if (hasClicked) {
-        gsap.set("#next-video", { visibility: "visible" });
+        gsap.set("#next-video", {
+          border: "none",
+          visibility: "visible",
+        });
         gsap.to("#next-video", {
           transformOrigin: "center center",
           scale: 1,
@@ -48,6 +99,7 @@ const Hero = () => {
           onStart: () => nextVdRef.current.play(),
         });
         gsap.from("#current-video", {
+          border: "none",
           transformOrigin: "center center",
           scale: 0,
           duration: 1.5,
@@ -57,6 +109,32 @@ const Hero = () => {
     },
     {
       dependencies: [currentIndex],
+      revertOnUpdate: true,
+    }
+  );
+  useGSAP(
+    () => {
+      if (hasHovered) {
+        const t1 = gsap.timeline({ repeat: -1, yoyo: true }); // repeat indefinitely and reverse on each iteration
+        t1.to("#smallVideoContainer", {
+          transformOrigin: "center center",
+          scale: 1.2, // scale up
+          duration: 0.6, // pulse speed
+          border: "1px solid white",
+          ease: "power1.inOut",
+        });
+        t1.to("#smallVideoContainer", {
+          transformOrigin: "center center",
+          scale: 0.9, // scale down
+          border: "1px solid white",
+          duration: 0.6, // pulse speed
+          ease: "power1.inOut",
+        });
+        t1.play();
+      }
+    },
+    {
+      dependencies: [hasHovered],
       revertOnUpdate: true,
     }
   );
@@ -79,8 +157,15 @@ const Hero = () => {
     });
   });
 
+  useEffect(() => {}, [showSmallVideo]);
   return (
-    <div className="relative h-dvh w-screen overflow-x-hidden bg-violet-50">
+    <div
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => {
+        setShowSmallVideo(true);
+      }}
+      className="relative h-dvh w-screen overflow-x-hidden bg-violet-50"
+    >
       {loading && (
         <div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50">
           {/* https://uiverse.io/G4b413l/tidy-walrus-92 */}
@@ -96,11 +181,21 @@ const Hero = () => {
         className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-blue-75"
       >
         <div>
-          <div className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
+          <div
+            onMouseEnter={() => setHasHovered(true)}
+            onMouseLeave={() => setHasHovered(false)}
+            id="smallVideoContainer"
+            className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg"
+          >
             {/* <VideoPreview> */}
             <div
+              id="smallVideo"
               onClick={handleMiniVideoClick}
-              className="origin-cen.ter scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
+              className={`origin-center ${
+                showSmallVideo ? "opacity-1" : "opacity-0"
+              }  
+              `}
+              // scale-[25%]  transition-all duration-500 ease-in hover:scale-100
             >
               <video
                 ref={nextVdRef}
