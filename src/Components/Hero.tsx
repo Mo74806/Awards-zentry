@@ -8,19 +8,19 @@ import Button from "./Button";
 gsap.registerPlugin(ScrollTrigger);
 const Hero = () => {
   const totalVideos = 4;
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  // const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   // const [direction, setDirection] = useState("");
 
-  const directions = {
-    north: "North",
-    south: "South",
-    east: "East",
-    west: "West",
-    eastnorth: "East-North",
-    eastsouth: "East-South",
-    northwestEast: "North-West-East", // North-West-East combination
-    southeastWest: "South-East-West", // South-East-West combination
-  };
+  // const directions = {
+  //   north: "North",
+  //   south: "South",
+  //   east: "East",
+  //   west: "West",
+  //   eastnorth: "East-North",
+  //   eastsouth: "East-South",
+  //   northwestEast: "North-West-East", // North-West-East combination
+  //   southeastWest: "South-East-West", // South-East-West combination
+  // };
 
   // const handleMouseMove = (event: any) => {
   //   const newX = event.clientX;
