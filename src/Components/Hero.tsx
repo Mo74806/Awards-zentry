@@ -8,6 +8,7 @@ import Button from "./Button";
 gsap.registerPlugin(ScrollTrigger);
 const Hero = () => {
   const totalVideos = 4;
+  //fix
   // const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   // const [direction, setDirection] = useState("");
 
