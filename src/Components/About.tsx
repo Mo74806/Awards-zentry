@@ -1,6 +1,5 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import React from "react";
 import AnimatedTitle from "./AnimatedTitle";
 
 const About = () => {
@@ -12,12 +11,10 @@ const About = () => {
         end: "+=800 center",
         scrub: 0.5,
         pin: true,
-        // pinSpacing: true,
-        markers: true,
+       
       },
     });
 
-    // });
 
     clipAnimation.to(".mask-clip-path", {
       width: "100%",

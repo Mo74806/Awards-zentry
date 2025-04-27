@@ -1,10 +1,9 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import AnimatedTitle from "./AnimatedTitle";
 import gsap from "gsap";
 import Button from "./Button";
 
 const Story = () => {
-  //   const [transformStyle, setTransformStyle] = useState("");
   const frameRef = useRef<any>(null);
 
   const handleMouseMove = (e: any) => {
@@ -67,7 +66,6 @@ const Story = () => {
                   onMouseLeave={handleMouseLeave}
                   onMouseUp={handleMouseLeave}
                   onMouseEnter={handleMouseLeave}
-                  //   style={{ transform: transformStyle }}
                   src="img/entrance.webp"
                   alt="entrance"
                   className="object-contain"
