@@ -8,49 +8,51 @@ import Button from "./Button";
 gsap.registerPlugin(ScrollTrigger);
 const Hero = () => {
   const totalVideos = 4;
-  //fix
-  // const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  // const [direction, setDirection] = useState("");
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [direction, setDirection] = useState("");
 
-  // const directions = {
-  //   north: "North",
-  //   south: "South",
-  //   east: "East",
-  //   west: "West",
-  //   eastnorth: "East-North",
-  //   eastsouth: "East-South",
-  //   northwestEast: "North-West-East", // North-West-East combination
-  //   southeastWest: "South-East-West", // South-East-West combination
-  // };
+  const directions = {
+    north: "North",
+    south: "South",
+    east: "East",
+    west: "West",
+    eastnorth: "East-North",
+    eastsouth: "East-South",
+    northwestEast: "North-West-East", // North-West-East combination
+    southeastWest: "South-East-West", // South-East-West combination
+  };
 
-  // const handleMouseMove = (event: any) => {
-  //   const newX = event.clientX;
-  //   const newY = event.clientY;
+  const handleMouseMove = (event: any) => {
+    const newX = event.clientX;
+    const newY = event.clientY;
 
-  //   // Determine the direction based on previous and new mouse position
-  //   if (newX > mousePosition.x && newY < mousePosition.y) {
-  //     setDirection(directions.eastnorth); // East-North
-  //   } else if (newX < mousePosition.x && newY < mousePosition.y) {
-  //     setDirection(directions.eastsouth); // East-South
-  //   } else if (newX > mousePosition.x && newY > mousePosition.y) {
-  //     setDirection(directions.eastsouth); // East-South
-  //   } else if (newX < mousePosition.x && newY > mousePosition.y) {
-  //     setDirection(directions.southeastWest); // South-East-West
-  //   } else if (newX > mousePosition.x && newY < mousePosition.y) {
-  //     setDirection(directions.northwestEast); // North-West-East
-  //   } else if (newX > mousePosition.x) {
-  //     setDirection(directions.east);
-  //   } else if (newX < mousePosition.x) {
-  //     setDirection(directions.west);
-  //   } else if (newY < mousePosition.y) {
-  //     setDirection(directions.north);
-  //   } else if (newY > mousePosition.y) {
-  //     setDirection(directions.south);
-  //   }
+    // Determine the direction based on previous and new mouse position
+    if (newX > mousePosition.x && newY < mousePosition.y) {
+      setDirection(directions.eastnorth); // East-North
+    } else if (newX < mousePosition.x && newY < mousePosition.y) {
+      setDirection(directions.eastsouth); // East-South
+    } else if (newX > mousePosition.x && newY > mousePosition.y) {
+      setDirection(directions.eastsouth); // East-South
+    } else if (newX < mousePosition.x && newY > mousePosition.y) {
+      setDirection(directions.southeastWest); // South-East-West
+    } else if (newX > mousePosition.x && newY < mousePosition.y) {
+      setDirection(directions.northwestEast); // North-West-East
+    } else if (newX > mousePosition.x) {
+      setDirection(directions.east);
+    } else if (newX < mousePosition.x) {
+      setDirection(directions.west);
+    } else if (newY < mousePosition.y) {
+      setDirection(directions.north);
+    } else if (newY > mousePosition.y) {
+      setDirection(directions.south);
+    }
 
-  //   setMousePosition({ x: newX, y: newY });
-  // };
+    setMousePosition({ x: newX, y: newY });
+  };
 
+  useEffect(() => {
+    console.log(direction);
+  }, [direction]);
   const nextVdRef = useRef<any>(null);
   const [currentIndex, setCurrentIndex] = useState(1);
   const [hasClicked, setHasClicked] = useState(false);
@@ -70,7 +72,9 @@ const Hero = () => {
     setCurrentIndex((prevIndex) => (prevIndex % totalVideos) + 1);
   };
 
+  useEffect(() => {}, []);
   useEffect(() => {
+    console.log(loadedVideos);
     if (loadedVideos === totalVideos - 1) {
       setLoading(false);
     }
@@ -156,7 +160,7 @@ const Hero = () => {
   useEffect(() => {}, [showSmallVideo]);
   return (
     <div
-      // onMouseMove={handleMouseMove}
+      onMouseMove={handleMouseMove}
       onMouseEnter={() => {
         setShowSmallVideo(true);
       }}
@@ -164,6 +168,7 @@ const Hero = () => {
     >
       {loading && (
         <div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50">
+          {/* https://uiverse.io/G4b413l/tidy-walrus-92 */}
           <div className="three-body">
             <div className="three-body__dot"></div>
             <div className="three-body__dot"></div>
@@ -182,6 +187,7 @@ const Hero = () => {
             id="smallVideoContainer"
             className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg"
           >
+            {/* <VideoPreview> */}
             <div
               id="smallVideo"
               onClick={handleMiniVideoClick}
@@ -189,6 +195,7 @@ const Hero = () => {
                 showSmallVideo ? "opacity-1" : "opacity-0"
               }  
               `}
+              // scale-[25%]  transition-all duration-500 ease-in hover:scale-100
             >
               <video
                 ref={nextVdRef}
@@ -200,6 +207,7 @@ const Hero = () => {
                 onLoadedData={handleVideoLoad}
               />
             </div>
+            {/* </VideoPreview> */}
           </div>
           <video
             ref={nextVdRef}
@@ -207,7 +215,7 @@ const Hero = () => {
             loop
             muted
             id="next-video"
-            className="absolute-center invisible border-none absolute z-20 size-64 object-cover object-center"
+            className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
             onLoadedData={handleVideoLoad}
           />
           <video
@@ -217,7 +225,7 @@ const Hero = () => {
             autoPlay
             loop
             muted
-            className="absolute left-0 border-none top-0 size-full object-cover object-center"
+            className="absolute left-0 top-0 size-full object-cover object-center"
             onLoadedData={handleVideoLoad}
           />
         </div>
