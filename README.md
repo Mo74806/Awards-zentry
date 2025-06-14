@@ -1,50 +1,88 @@
-# React + TypeScript + Vite
+<div align="center">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 🎉 Awards-Zentry
 
-Currently, two official plugins are available:
+*A React‑based rebuild of the Awwwards-winning Zentry website, featuring smooth GSAP-powered animations and modern design.*
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[**Live Demo**](https://rebuildofzentry.vercel.app)
+</div>
+---
 
-## Expanding the ESLint configuration
+## 🔥 Table of Contents
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. [About](#about)  
+2. [Tech Stack](#tech-stack)  
+3. [Features](#features)  
+4. [Getting Started](#getting-started)  
+   1. [Prerequisites](#prerequisites)  
+   2. [Installation](#installation)  
+   3. [Development](#development)  
+5. [Credits & License](#credits--license)  
 
-- Configure the top-level `parserOptions` property like this:
+---
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## About
+
+This project is a **rewritten clone of Zentry.com**, originally acclaimed as an Awwwards-winning site. It’s rebuilt using **React**, **TailwindCSS**, and **GSAP** to replicate its unique visual flair and interactive animations.
+
+---
+
+## Tech Stack
+
+- **React** – component‑based UI  
+- **TailwindCSS** – utility-first CSS  
+- **GSAP** – advanced animations  
+- **Vite** – fast dev builds  
+- Optional: **TypeScript** support
+
+---
+
+## Features
+
+- Scroll-triggered animations  
+- Clip-path and 3D hover effects  
+- Media-rich Hero & Story sections  
+- Fully responsive across devices  
+- Reusable components and architecture
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js v16+  
+- npm or yarn
+
+---
+
+### Installation
+
+```bash
+git clone https://github.com/Mo74806/Awards-zentry.git
+cd Awards-zentry
+npm install
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+---
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Development
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+Start the dev server:
+
+```bash
+npm run dev
 ```
+
+Visit `http://localhost:3000` to view the site.
+
+---
+
+
+## Credits & License
+
+- Rebuilt for **educational purposes** with React, GSAP, and Tailwind  
+- **Assets & design** belong to original creators; ensure you have rights to use them  
+
+---
+
