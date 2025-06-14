@@ -5,8 +5,8 @@
 *A React‑based rebuild of the Awwwards-winning Zentry website, featuring smooth GSAP-powered animations and modern design.*
 
 [**Live Demo**](https://rebuildofzentry.vercel.app)
-</div>
 ---
+</div>
 
 ## 🔥 Table of Contents
 
